@@ -1,0 +1,18 @@
+ProjectDataSource.email_user=javevirtual@javerianacali.edu.co
+ProjectDataSource.email_pwd=Pontificia09
+ProjectDataSource.email_port=25
+ProjectDataSource.email_requerimientos=requerimientoscsi@javerianacali.edu.co
+ProjectDataSource.username=ps_bb_integrated
+ProjectDataSource.driverClassName=oracle.jdbc.driver.OracleDriver
+
+# PRODUCCIÓN ------------------------------------------------------------
+ProjectDataSource.email_host=correos.javerianacali.edu.co
+ProjectDataSource.password=pbid
+ProjectDataSource.url=jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = svrrac01-vip)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = svrrac02-vip)(PORT = 1521))(LOAD_BALANCE = yes)(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = HR9PRD)))
+
+# RÉPLICA ------------------------------------------------------------
+#ProjectDataSource.email_host=localhost
+#ProjectDataSource.password=loudhall74
+#ProjectDataSource.url=jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.100.65)(PORT=1521)))(CONNECT_DATA=(SID=HR9PRD)(SERVER=DEDICATED)))
+
+

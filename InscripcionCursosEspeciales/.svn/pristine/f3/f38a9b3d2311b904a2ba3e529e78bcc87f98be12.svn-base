@@ -1,0 +1,97 @@
+package co.edu.javerianacali.persistence;
+
+import co.edu.javerianacali.entities.CursoCopiado;
+import co.edu.javerianacali.entities.CursoPeopleSoft;
+import co.edu.javerianacali.entities.Parametro;
+import co.edu.javerianacali.entities.Periodo;
+import co.edu.javerianacali.entities.Profesor;
+import co.edu.javerianacali.entities.TblConfiguracion;
+import co.edu.javerianacali.interfaces.persistence.IConsultaDao;
+import co.edu.javerianacali.jdbc.NamedJdbcDao;
+import co.edu.javerianacali.persistence.mappers.CursoCopiadoMapper;
+import co.edu.javerianacali.persistence.mappers.CursoPeopleSoftMapper;
+import co.edu.javerianacali.persistence.mappers.PeriodoMapper;
+import co.edu.javerianacali.persistence.mappers.ProfesorMapper;
+import co.edu.javerianacali.persistence.mappers.TblConfiguracionMapper;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class ConsultaDao extends NamedJdbcDao implements IConsultaDao {
+
+    public List<TblConfiguracion> getParametrosLDAP() {
+        String sql = "select * from Monitoreo.tbl_configuracion order by nidconfiguracion";
+        return this.getJdbcTemplate().query(sql, new TblConfiguracionMapper());
+    }
+
+    public List<Periodo> getPeriodoActual() {
+        String sql = "select strm, periodo from ps_bb_integrated.periodos_validos";
+        return this.getJdbcTemplate().query(sql, new PeriodoMapper());
+    }
+
+    public List<Profesor> getCursosNombreCorreoDeProfesor(String oprid) {
+        String sql = "select oprdefndesc, emailid"
+                + " from sysadm.psoprdefn"
+                + " where UPPER(oprid) = '" + oprid.toUpperCase() + "'";
+        return this.getJdbcTemplate().query(sql, new ProfesorMapper());
+    }
+
+    public List<CursoPeopleSoft> getCursosProfesorEnUnPeriodo(String strm, String oprid) {
+        String sql = "select d.oprid, trim(c.catalog_nbr) catalog_nbr, c.DESCR, c.class_section GRUPO, c.acad_career, c.class_nbr "
+                + " from sysadm.ps_class_tbl c, sysadm.psoprdefn d"
+                + " where c.emplid = d.emplid"
+                + " and c.institution = 'PUJCL'"
+                + " and c.strm = '" + strm + "'" // Parametro Periodo
+                + " and UPPER(d.oprid) = '" + oprid.toUpperCase() + "'"; // Parametro OPRID DEL PROFESOR
+        return this.getJdbcTemplate().query(sql, new CursoPeopleSoftMapper());
+    }
+
+    public List<CursoCopiado> getCursosCopiadosPorCodigo(String codigo, String periodo, String grupo) {
+        String sql = "select * from ps_bb_integrated.cursos_origen where catalog_nbr='" + codigo + "' and periodo='" + periodo + "' and sesion='" + grupo + "'"; // Parametro OPRID DEL PROFESOR
+        return this.getJdbcTemplate().query(sql, new CursoCopiadoMapper());
+    }
+
+    public void insertCopiaCurso(String codigo, String grupo, String periodo, String plantilla) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("codigo", codigo);
+        namedParameters.addValue("grupo", grupo);
+        namedParameters.addValue("periodo", periodo);
+        namedParameters.addValue("plantilla", plantilla);
+        String sql = "insert into ps_bb_integrated.cursos_origen (catalog_nbr, sesion, periodo, crse_id_template) values (:codigo, :grupo, :periodo, :plantilla)";
+        this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+    }
+
+    public String insertCopiaCurso2(String codigo, String grupo, String periodo, String plantilla) {
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+        namedParameters.addValue("codigo", codigo);
+        namedParameters.addValue("grupo", grupo);
+        namedParameters.addValue("periodo", periodo);
+        namedParameters.addValue("plantilla", plantilla);
+        //String sql = "insert into cursos_origen (catalog_nbr, sesion, periodo, crse_id_template) values (:codigo, :grupo, :periodo, :plantilla)";
+        String sql = "insert into ps_bb_integrated.cursos_origen (catalog_nbr, sesion, periodo, crse_id_template) values (" + codigo + ", " + grupo + ", " + periodo + ", " + plantilla + ")";
+        //this.getNamedParameterJdbcTemplate().update(sql, namedParameters);
+        return sql;
+    }
+    
+    
+    public List<Parametro> getMonitorPool() throws SQLException {
+        
+          BasicDataSource dataSource = (BasicDataSource) this.getJdbcTemplate()
+                        .getDataSource();
+          Integer max = dataSource.getMaxActive();
+          Integer min = dataSource.getMinIdle();
+          Integer initial = dataSource.getInitialSize();
+          Integer currents = dataSource.getNumActive();
+          List<Parametro> parametros = new ArrayList<Parametro>();
+          parametros.add(new Parametro("max", max));
+          parametros.add(new Parametro("min", min));
+          parametros.add(new Parametro("initial", initial));
+          parametros.add(new Parametro("currents", currents));
+          return parametros;
+    }
+
+}

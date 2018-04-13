@@ -1,0 +1,245 @@
+@charset "utf-8";
+#pagina {
+	width: 800px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:0px;
+	background-color: #fff;
+	border-color:#F63
+}
+#franja {
+	width: 800px;
+	height:12px;	
+}
+#pie {
+	height:25px;	
+	background-image:url('../Imagenes/Piedepagina.png');
+}
+
+#pie .contacto{
+	height:25px;	
+	width: 350px;
+        margin: 0 auto 0;
+        display: table;
+}
+
+#pie .contacto .institucion, 
+#pie .contacto .separador,
+#pie .contacto .oficina{
+    height:25px;
+    display: table-cell;
+    margin: 0;
+    vertical-align: middle;
+}
+
+
+#pie .contacto .institucion{
+	width: 237px;
+        text-align: right;
+        
+}
+
+.separador{
+	width: 20px;
+        background-position:center; 
+        background-image:url('../Imagenes/divider.png');
+        background-repeat:no-repeat;
+}
+
+#pie .contacto .oficina{
+	width: 72px;
+        text-align: left;
+}
+
+#pagina #contenido {
+	background-color:#FFF;
+	padding: 20px 30px 30px 30px;
+}
+#pagina #contenido2 {
+	background-color:#FFF;
+	padding: 20px 30px 30px 30px;
+}
+#tabla_sesion {
+	margin-top:90px;
+	margin-bottom:120px;
+
+}
+
+#titulo {
+	background-color:#fff;
+	background-image:url(../Imagenes/imagen_filtro.png);
+	background-repeat:no-repeat;
+	width:750px;
+	height:50px;
+	padding-top:13px;
+	padding-left:40px;
+	padding-bottom:10px;
+}
+
+#titulo1 {
+	background-color:#fff;
+	background-image:url(../Imagenes/paso1.png);
+	background-repeat:no-repeat;
+	width:650px;
+	height:55px;
+	padding-top:13px;
+	padding-left:45px;
+	padding-bottom:10px;
+}
+#titulo2 {
+	background-color:#fff;
+	background-image:url(../Imagenes/paso2.png);
+	background-repeat:no-repeat;
+	width:600px;
+	height:40px;
+	padding-top:13px;
+	padding-left:40px;
+	padding-bottom:10px;
+}
+#titulo3 {
+	background-color:#fff;
+	background-image:url(../Imagenes/paso3.png);
+	background-repeat:no-repeat;
+	width:600px;
+	height:40px;
+	padding-top:13px;
+	padding-left:40px;
+	padding-bottom:10px;
+}
+
+
+form table tr:nth-child(even) { background: #ddd}
+form table tr:nth-child(odd) { background: #fff}
+
+
+fieldset {
+  padding: 10px 0px 10px 20px;
+  margin-bottom: 25px;
+ }
+ 
+ #cabecera{
+     background-color:#fff;
+     background-image:url(../Imagenes/Encabezado.png);
+     background-repeat:no-repeat;
+     height: 71px;
+     width: 800px;
+ } 
+ 
+ #franja{
+     background-color:#fff;
+     background-image:url(../Imagenes/Sombra.png);
+     background-repeat:no-repeat;
+     height: 12px;
+     width: 800px;
+ }
+ 
+.contenidos {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+.contenidos_solicitado
+{
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	color: #999999;
+}
+
+.comentario {
+    display: table;
+}
+
+.comentario > *{
+    display: table-cell;
+}
+
+.comentario label{
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #666666;
+    border-left: solid transparent 5px;
+}
+
+.icono_advertencia {
+    background-image:url('../Imagenes/Advertencia.png');
+    background-repeat:no-repeat;
+    width: 16px;
+    height: 16px;
+}
+
+.navegacion{
+    text-align: right;
+    margin-top: 12px;
+}
+
+.texto_tabla {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+}
+
+.Titulos {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight:bold;	 
+	color: #004785;
+}
+.Titulo_sesion {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-weight:bold;	 
+	color: #004785;
+}
+
+.Piedepagina {
+font-family: Tahoma, Geneva, sans-serif;
+font-size: 11px;
+color: #666666;
+}
+
+.salir {
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 5px;
+    display: table;
+}
+
+.aprobar {
+     cursor: pointer;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 5px;
+    display: table;
+}
+.aprobar label {
+    cursor: pointer;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #0564B1;
+    border-right: solid white 5px;
+    display: table-cell;
+}
+
+.salir label {
+    cursor: pointer;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    color: #0564B1;
+    border-right: solid white 5px;
+    display: table-cell;
+}
+
+.salir .icono {
+    background-image:url('../Imagenes/salir.gif');
+    background-repeat:no-repeat;
+    width: 16px;
+    height: 16px;
+    display: table-cell;
+}
+
+
+

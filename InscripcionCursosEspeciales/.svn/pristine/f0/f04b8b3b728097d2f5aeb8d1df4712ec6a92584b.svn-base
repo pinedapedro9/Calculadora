@@ -1,0 +1,5 @@
+@CHARSET "ISO-8859-1";
+input[type=text],select,textarea,label,input {
+	width: 90%;
+	margin: 2px;
+}

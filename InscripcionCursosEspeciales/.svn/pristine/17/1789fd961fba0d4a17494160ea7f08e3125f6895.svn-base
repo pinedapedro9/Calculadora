@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/appServlet/jdbc.properties" />
+	</bean>
+
+	<bean id="sysaNamedJdbcTemplate" 
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg>
+			<ref bean="principalDataSource" />
+		</constructor-arg>
+	</bean>
+	
+	<bean id="principalDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<qualifier value="principalDataSource" />
+		<property name="username" value="${ProjectDataSource.username}" />
+		<property name="driverClassName" value="${ProjectDataSource.driverClassName}" />
+		<property name="url" value="${ProjectDataSource.url}" />
+		<property name="password" value="${ProjectDataSource.password}" />
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="principalDataSource" />
+	</bean>
+</beans>

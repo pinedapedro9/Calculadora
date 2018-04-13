@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="/WEB-INF/appServlet/jdbc.properties" />
+	</bean>
+
+	<bean id="sysaNamedJdbcTemplate" 
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg>
+			<ref bean="principalDataSource" />
+		</constructor-arg>
+	</bean>
+	
+	<bean id="principalDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<qualifier value="principalDataSource" />
+		<property name="username" value="${Principal.username}" />
+		<property name="driverClassName" value="${Principal.driverClassName}" />
+		<property name="url" value="${Principal.url}" />
+		<property name="password" value="${Principal.password}" />
+	</bean>
+	
+	<bean id="psDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<qualifier value="PSDataSource" />
+		<property name="username" value="${PS.username}" />
+		<property name="driverClassName" value="${PS.driverClassName}" />
+		<property name="url" value="${PS.url}" />
+		<property name="password" value="${PS.password}" />
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="principalDataSource" />
+	</bean>
+	
+	<bean id="psTransactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="psDataSource" />
+	</bean>
+</beans>

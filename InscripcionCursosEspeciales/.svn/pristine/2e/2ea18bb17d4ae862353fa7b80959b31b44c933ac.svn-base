@@ -1,0 +1,114 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package co.edu.javerianacali.controllers;
+
+import java.io.IOException;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+
+/**
+ *
+ * @author afgomez
+ */
+public class CorreoRequerimiento {
+
+    String correoRequerimientos;
+    String claveCorreoRemitente;
+    String servidorCorreo;
+    int puerto;
+
+    private void configEnvio(HttpServletRequest request) throws IOException {
+        Configuration configuration;
+
+        HttpServletRequestWrapper srw = new HttpServletRequestWrapper(request);
+        String ruta = srw.getRealPath("");
+        ruta += "/WEB-INF/appServlet/jdbc.properties";
+        
+        configuration = new Configuration(ruta);
+
+
+        correoRequerimientos = configuration.getProperty(Configuration.MAIL_REQUERIMIENTOS);
+        claveCorreoRemitente = configuration.getProperty(Configuration.MAIL_PASSWORD);
+        servidorCorreo = configuration.getProperty(Configuration.MAIL_HOST);
+        puerto = Integer.parseInt(configuration.getProperty(Configuration.MAIL_PORT));
+    }
+
+    public void enviarCorreo(HttpServletRequest request, String mensaje, String asunto, String emailUsuario) throws MessagingException, IOException {
+
+        
+        //---inicia envio de correo electronico (temporalmente desactivado)
+//        
+//        configEnvio(request);
+//
+//        EmailSenderUtil despachadorCorreo = new EmailSenderUtil();
+//        EmailInfo info = new EmailInfo();
+//        info.setHTML(true);
+//        info.setFrom(emailUsuario);
+//        info.setTo(correoRequerimientos);
+//        info.setSubject(asunto);
+//
+//        
+//
+//        info.setText(mensaje);
+//
+//        EmailSenderUtil.EnviarEmail(info, EmailServer.CORREOS);
+
+            
+
+        //--termina envio de correo electronico 
+        
+        
+        configEnvio(request);
+
+        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+        sender.setHost(servidorCorreo);
+        sender.setPort(puerto);
+
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(correoRequerimientos);
+        helper.setFrom(emailUsuario);   
+        helper.setText(mensaje, true);
+        helper.setSubject(asunto);
+
+        sender.send(message);
+
+////        try {
+//            configEnvio();
+//
+//            // Construimos el mensaje
+//            MimeMessage message = new MimeMessage(session);
+//            message.setFrom(new InternetAddress(correoRequerimientos));
+//
+//            //Destinatario y mensaje
+//            message.addRecipient(
+//                Message.RecipientType.TO,
+//                new InternetAddress(destinatario));
+//
+//            //asunto    
+//            message.setSubject(asunto);
+//            message.setText(mensaje);
+//
+//            // Lo enviamos.
+////            Transport t = session.getTransport("smtp");
+////            t.connect(correoRequerimientos, claveCorreoRemitente);
+////            message.saveChanges();
+////            t.sendMessage(message, message.getAllRecipients());
+////
+////            // Cierre.
+////            t.close();
+//            Transport.send(message);
+//            
+////        } catch (MessagingException ex) {
+////            Logger.getLogger(CorreoRequerimiento.class.getName()).log(Level.SEVERE, null, ex);
+////        }
+
+
+    }
+}
