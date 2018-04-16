@@ -37,7 +37,7 @@ public void testApp()
 	int num2=2;
 	
 	 int total= calculadora.sumar(num1, num2);
-    assertTrue( total==5);
+    assertTrue( total==3);
 }
 }
 
